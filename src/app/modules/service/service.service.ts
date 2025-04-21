@@ -10,8 +10,12 @@ export const ServiceService = {
         if (!bikeExists) {
           throw new Error('Bike with the provided bikeId does not exist.');
         }
-        return await prisma.service.create({ data: payload });
-      },
+        const serviceDate = new Date(payload.serviceDate);
+        serviceDate.setHours(0, 0, 0, 0); 
+        return await prisma.service.create({
+          data: { ...payload, serviceDate }
+        });
+    },
 
   getAllServices: async () => {
     return await prisma.service.findMany();
@@ -30,20 +34,26 @@ export const ServiceService = {
       },
     });
   },
+  
   getPendingOrOverdueServices: async () => {
     const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); 
-
-    return await prisma.service.findMany({
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    console.log("Seven days ago:", sevenDaysAgo);
+    const services = await prisma.service.findMany({
       where: {
         OR: [
           { status: 'pending' },
-          { status: 'in-progress' },
+          { status: 'in_progress' },
         ],
         serviceDate: {
           lt: sevenDaysAgo,
         },
       },
     });
+
+    console.log("Fetched services:", services);
+    return services;
   }
+
+
 };
