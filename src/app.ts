@@ -1,13 +1,13 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors"
-import { CustomerRoutes } from './app/modules/customer/customer.routes';
+import router from "./routes";
 
 const app:Application = express()
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/customers', CustomerRoutes);
+app.use(router);
 
 app.get('/',(req:Request, res:Response)=>{
     res.send({
