@@ -30,4 +30,20 @@ export const ServiceService = {
       },
     });
   },
+  getPendingOrOverdueServices: async () => {
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // Get date 7 days ago
+
+    return await prisma.service.findMany({
+      where: {
+        OR: [
+          { status: 'pending' },
+          { status: 'in-progress' },
+        ],
+        serviceDate: {
+          lt: sevenDaysAgo,
+        },
+      },
+    });
+  }
 };
