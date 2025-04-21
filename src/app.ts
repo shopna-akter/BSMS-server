@@ -11,7 +11,7 @@ app.use(router);
 
 app.get('/',(req:Request, res:Response)=>{
     res.send({
-        message: "bsms server..."
+        message: "bsms server is running"
     })
 })
 export default app
