@@ -1,6 +1,6 @@
 import express from 'express';
 import { CustomerController } from './customer.controller';
-import validateRequest from '../../middlewares/validateRequest';
+import validateRequest from '../../../middlewares/validateRequest';
 import {
   createCustomerZodSchema,
   updateCustomerZodSchema,
