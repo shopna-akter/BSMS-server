@@ -165,7 +165,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -175,16 +175,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:shopna@akter88@localhost:5432/BSMS_DB?schema=public"
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Customer {\n  customerId String   @id @default(uuid())\n  name       String\n  email      String   @unique\n  phone      String\n  createdAt  DateTime @default(now())\n  bikes      Bike[]\n}\n\nmodel Bike {\n  bikeId     String          @id @default(uuid())\n  brand      String\n  model      String\n  year       Int\n  customerId String\n  customer   Customer        @relation(fields: [customerId], references: [customerId])\n  services   ServiceRecord[]\n}\n\nmodel ServiceRecord {\n  serviceId      String    @id @default(uuid())\n  bikeId         String\n  bike           Bike      @relation(fields: [bikeId], references: [bikeId])\n  serviceDate    DateTime\n  completionDate DateTime?\n  description    String\n  status         String\n}\n",
-  "inlineSchemaHash": "4bf0fe078de573fdbd30e05a9582cf76d65b7c07bf9792769c192ba9fa326ee4",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Customer {\n  customerId String   @id @default(uuid())\n  name       String\n  email      String   @unique\n  phone      String\n  createdAt  DateTime @default(now())\n  bikes      Bike[]\n}\n\nmodel Bike {\n  bikeId     String          @id @default(uuid())\n  brand      String\n  model      String\n  year       Int\n  customerId String\n  customer   Customer        @relation(fields: [customerId], references: [customerId])\n  services   ServiceRecord[]\n}\n\nmodel ServiceRecord {\n  serviceId      String    @id @default(uuid())\n  bikeId         String\n  bike           Bike      @relation(fields: [bikeId], references: [bikeId])\n  serviceDate    DateTime\n  completionDate DateTime?\n  description    String\n  status         String\n}\n",
+  "inlineSchemaHash": "64292783aea0ac6e56f58e3bc926f4fd7c9cc0c344d32f896a57f2c5fcb51799",
   "copyEngine": true
 }
 
