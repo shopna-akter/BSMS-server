@@ -9,5 +9,6 @@ router.post('/', validateRequest(createServiceZodSchema), ServiceController.crea
 router.get('/', ServiceController.getAllServices);
 router.get('/:id', ServiceController.getSingleService);
 router.put('/:id/complete', validateRequest(markServiceCompleteZodSchema), ServiceController.markServiceAsCompleted);
+router.get('/status', ServiceController.getPendingOrOverdueServices);
 
 export const ServiceRoutes = router;

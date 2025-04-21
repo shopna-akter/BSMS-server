@@ -24,7 +24,11 @@ model Bike {
   customer   Customer @relation(fields: [customerId], references: [customerId])
   services   Service[]
 }
-
+enum ServiceStatus {
+  pending
+  in_progress
+  done
+}
 model Service {
   serviceId      String   @id @default(uuid())
   bikeId         String
@@ -32,5 +36,5 @@ model Service {
   serviceDate    DateTime
   completionDate DateTime?
   description    String
-  status         String   
+  status         ServiceStatus   
 }

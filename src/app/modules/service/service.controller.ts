@@ -53,4 +53,16 @@ export const ServiceController = {
       next(error);
     }
   },
+  getPendingOrOverdueServices: async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const result = await ServiceService.getPendingOrOverdueServices();
+      res.status(200).json({
+        success: true,
+        message: 'Overdue or pending services fetched successfully',
+        data: result,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 };

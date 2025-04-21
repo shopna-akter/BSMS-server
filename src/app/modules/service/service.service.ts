@@ -32,7 +32,7 @@ export const ServiceService = {
   },
   getPendingOrOverdueServices: async () => {
     const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); // Get date 7 days ago
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7); 
 
     return await prisma.service.findMany({
       where: {
