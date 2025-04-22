@@ -5,17 +5,27 @@ interface ErrorResponse {
   status: number;
   message: string;
   stack?: string;
+  errorDetails?: unknown;
 }
 
-export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction): void => {
+export const errorHandler = (err: any, req: Request, res: Response, _next: NextFunction): void => {
   console.error(err.stack);
+
+  const statusCode = err.status || err.statusCode || 500;
 
   const errorResponse: ErrorResponse = {
     success: false,
-    status: err.status || 500,
+    status: statusCode,
     message: err.message || 'Internal Server Error',
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   };
 
-  res.status(errorResponse.status).json(errorResponse);
+  if (err.errorDetails) {
+    errorResponse.errorDetails = err.errorDetails;
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    errorResponse.stack = err.stack;
+  }
+
+  res.status(statusCode).json(errorResponse);
 };

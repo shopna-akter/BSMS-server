@@ -11,10 +11,10 @@ const validateRequest = (schema: AnyZodObject) => {
       });
       next();
     } catch (error: any) {
-      res.status(400).json({
-        success: false,
+      next({
+        statusCode: 400,
         message: 'Validation Error',
-        error: error.errors,
+        errorDetails: error.errors,
       });
     }
   };

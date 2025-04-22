@@ -22,10 +22,29 @@ export const ServiceService = {
   },
 
   getSingleService: async (id: string) => {
-    return await prisma.service.findUnique({ where: { serviceId: id } });
+    const service = await prisma.service.findUnique({ where: { serviceId: id } });
+    if (!service) {
+      const error = new Error('Service not found');
+      (error as any).status = 404;
+      throw error;
+    }
+    return service;
   },
 
   markServiceAsCompleted: async (id: string, completionDate?: string) => {
+    const existing = await prisma.service.findUnique({ where: { serviceId: id } });
+    if (!existing) {
+      const error = new Error('Service not found');
+      (error as any).status = 404;
+      throw error;
+    }
+  
+    if (existing.status === 'done') {
+      const error = new Error('Service is already marked as completed.');
+      (error as any).status = 400;
+      throw error;
+    }
+  
     return await prisma.service.update({
       where: { serviceId: id },
       data: {
@@ -34,6 +53,7 @@ export const ServiceService = {
       },
     });
   },
+  
   
   getPendingOrOverdueServices: async () => {
     const sevenDaysAgo = new Date();

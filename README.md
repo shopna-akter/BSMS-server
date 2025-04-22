@@ -38,7 +38,7 @@ This is a backend API for managing bike servicing operations in a repair shop or
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/bike-servicing-api.git
+git clone https://github.com/shopna-akter/BSMS-server.git
 cd bike-servicing-api
 ```
 

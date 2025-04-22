@@ -11,7 +11,7 @@ export const createServiceZodSchema = z.object({
       /^\d{4}-\d{2}-\d{2}$/,
       'Invalid date format. Use YYYY-MM-DD.'
     ),
-    description: z.string({ required_error: 'Description is required' }),
+    description: z.string({ required_error: 'Description is required' }).min(1, 'Description cannot be empty'),
     status: statusEnum,
   }),
 });
